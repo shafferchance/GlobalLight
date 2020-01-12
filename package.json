@@ -1,0 +1,35 @@
+{
+  "name": "react-global-light",
+  "version": "0.0.1",
+  "description": "Lightweight, Highly-Customizable global state container made with React Hook and the context system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shafferchance/GlobalLight.git"
+  },
+  "keywords": [
+    "router",
+    "hooks",
+    "react",
+    "global",
+    "state",
+    "context"
+  ],
+  "author": "Chanceler Shaffer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shafferchance/GlobalLight/issues"
+  },
+  "homepage": "https://github.com/shafferchance/GlobalLight#readme",
+  "devDependencies": {
+    "@babel/core": "^7.8.0",
+    "@babel/preset-env": "^7.8.0",
+    "@babel/preset-react": "^7.8.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}

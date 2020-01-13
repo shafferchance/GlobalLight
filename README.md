@@ -12,3 +12,10 @@ The goal here is provide someone with a lightweight solution that will work out 
 - [ ] Make so single tag controls everything rather than dedicated file
 - [ ] Document code thoroughly
 - [ ] Integrate into a routing library at some point
+- [ ] Integrate IndexedDB for serialization
+
+###### Contact Information
+If you wish to help please feel free to reach out with the following:
+- Email: [shafferchance@gmail.com](mailto:shafferchance@gmail.com)
+- [Twitter](https://twitter.com/shafferchance)
+- [LinkedIn](https://www.linkedin.com/in/chance-shaffer-2b1511128/)

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GlobalContextProvider } from './mgmt.component';
+import { GlobalContextProvider, custContext } from './mgmt.component';
 
 /**
  * This will attempt to generate switch-case like behavior automatically based on the initial state passed to the program. Think of 
@@ -11,7 +11,7 @@ import { GlobalContextProvider } from './mgmt.component';
  * @param {Object} Config.stateI This contains the initial state of the funciton and will attempt to generate switch case like behavior
  * @param {Object} Config.children Property used by react to pass child elements and props down chain 
  */
-export const Store = ({ stateI, children }) => {
+export const GlobalStore = ({ stateI, children }) => {
     let valMap = {};
     for (const ele of stateI) {
         valMap[`set${ele}`] = (state, action) => {
@@ -26,6 +26,7 @@ export const Store = ({ stateI, children }) => {
         ...stateI
     }
 
+    // Instead of switch-case as below, will check if it exist 
     const reducer = (state, action) => {
         if (valMap.hasOwnProperty(`set${action.type}`)) {
             return valMap[`set${action.type}`](state, action);
@@ -41,6 +42,13 @@ export const Store = ({ stateI, children }) => {
     );
 };
 
+/**
+ * RouterStore will contain the state portion of page routing. This is to
+ * have tracibility and set paths linked to componenets.
+ * 
+ * @param {Object} props.stateI - Contains the routes of the application
+ * @param {Object} props.children - React will pass this down by default 
+ */
 export const RouterStore = ({ stateI, children }) => {
     const initialState = {
         ...stateI
@@ -48,7 +56,7 @@ export const RouterStore = ({ stateI, children }) => {
 
     const reducer = (state, action) => {
         // console.log(action); // Debug the action being called upon state container
-        switch(action.type) {
+        switch (action.type) {
             case 'changeRoute':
                 return {
                     ...state,
@@ -71,13 +79,76 @@ export const RouterStore = ({ stateI, children }) => {
                 };
             default:
                 return state;
-            
         }
     }
 
     return (
-        <GlobalContextProvider initialState={ initialState } reducer={ reducer }>
+        <custContext name={"Router"} initialState={ initialState } reducer={ reducer }>
             { children }
-        </GlobalContextProvider>
+        </custContext>
+    );
+}
+
+/**
+ * This is the Generic store that has four generic options in the reducer
+ * function used for state mutation. These functions are:
+ *      - setValue
+ *          x Will create or update values that are specified
+ *          x However, if they value has been deleted then an error will 
+ *            be thrown
+ *      - deleteValue
+ *          x A graveyard flag is added to the value, and the previously
+ *            stored value is archieved
+ *      - recoverValue
+ *          x Will remove the graveyard flag and reset the value to the
+ *            one that was archieved
+ * 
+ * Please note that action objects must be formatted as:
+ *      {type: [action], [key]: [value]}
+ * The reasoning is that the key is calculated with the keys of the Object
+ * thus even if the function doesn't take a value any must be passed as it 
+ * will be "thrown out" by the GC. This maybe changed eventually.
+ * 
+ * @param {String} name - Name of the context container
+ * @param {Object} stateI - Object containing the initial values of this generic state object 
+ */
+export const Store = ({ name = "base", stateI, children }) => {
+    const initState = {
+        ...stateI
+    }
+
+    const reducer = (state, action) => {
+        const key = Object.keys(action)[1];
+        switch (action.type) {
+            case "setValue":
+                if (state.hasOwnProperty(key)) {
+                    if (state[key].hasOwnProperty("graveyard")) { throw SyntaxError("Value has been deleted please use recoverValue"); }
+                }
+                return {
+                    ...state,
+                    [key]: action[key]
+                };
+                
+            case "deleteValue":
+                return {
+                    ...state,
+                    [key]: {graveyard: true, [key]: state[key]}
+                };
+            case "recoverValue":
+                return {
+                    ...state,
+                    [key]: state[key][key]
+                };
+            default:
+                console.log(`Please use setValue or expand reducer with custom function instead of ${action.type}`)
+                console.log(state);
+                break;
+        }
+    }
+
+    return (
+        <custContext name={ name } reducer={ reducer } initialState={ initState }>
+            { children}
+        </custContext>  
     );
 }

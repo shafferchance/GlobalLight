@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useStateValue } from './mgmt.component.jsx';
+import React, { useEffect } from 'react';
+import { useCustomContext } from './mgmt.component.jsx';
 
 /**
  * This link componenet is set-up to integrate compatibility with the 
@@ -10,12 +10,12 @@ import { useStateValue } from './mgmt.component.jsx';
  * @param {String} props.linkClass - CSS class to style link with
  */
 export const Link = ({ url, name, linkClass}) => {
-    const [{ currPath }, setPath] = useStateValue(); // Custom Hook for global context
+    const [state, dispatch] = useCustomContext("Router"); // Custom Hook for global context
     const handleClick = ev => {
         ev.preventDefault();
         // console.log(currPath) // To debug current path
         window.history.pushState({}, undefined, url); // Purely stores current page with History Browswer API
-        setPath({
+        dispatch({
             type: 'changeRoute',
             newPath: url
         });
@@ -49,43 +49,30 @@ export const Link = ({ url, name, linkClass}) => {
  * @param {Object} children - React default property that has children elements within JSX
  */
 export const Router = ({ routesArr, children }) => {
-    const [{ id }, setId] = useStateValue();
-    const [{ currPath }, setPath] = useStateValue();
-    const [{ routes }, setRoutes] = useStateValue();
-    const [{ ActiveComp }, setComp] = useStateValue();
-
-    console.log(children);
+    const [state, dispatch] = useCustomContext("Router");
 
     useEffect(() => {
-        // console.log(`New Path: ${currPath}`); // To print current path
-        storeRoutes();
-        if (currPath !== undefined) {
+        if (state.currPath !== undefined) {
             const url = window.location.pathname.split('/').slice(1);
-            for (let i of routes) {
-                if (currPath === i.path) {
-                    setComp({
+            for (let i of state.routes) {
+                if (state.currPath === i.path) {
+                    dispatch({
                         type: 'setActiveComp',
                         newComp: i.component
                     });
                     break;
                 }
 
-                /*
-                    Not using matchAll for now and will upgrade to do so if 
-                    necessary
-                */
                const match = i.path.match(/:\w+/g);
                const splitPath = i.path.split('/').slice(1);
                const idx = splitPath.indexOf(match !== null ? match[0] : -1);
-               // console.log(match); // Debug regex
-               // console.log(idx); // Debug idx
                if (match !== undefined && idx !== -1 &&
                     url[idx - 1].indexOf(splitPath[idx - 1]) !== -1) {
-                    setId({
+                    dispatch({
                         type: 'setId',
                         newId: url[idx],
                     });
-                    setComp({
+                    dispatch({
                         type: 'setActiveComp',
                         newComp: i.component
                     });
@@ -96,17 +83,17 @@ export const Router = ({ routesArr, children }) => {
             storePath(window.location.pathname);
         }
         window.onpopstate = storeLast;
-    }, [currPath]);
+    }, [state.currPath]);
 
     const storePath = url => {
-        setPath({
+        dispatch({
             type: 'changeRoute',
             newPath: url
         });
     }
 
     const storeRoutes = () => {
-        setRoutes({
+        dispatch({
             type: 'setRoutes',
             newRoutes: routesArr
         });
@@ -117,7 +104,8 @@ export const Router = ({ routesArr, children }) => {
         storePath(window.location.pathname);
     }
 
-    if (ActiveComp === undefined) {
+    storeRoutes();
+    if (state.ActiveComp === undefined) {
         return (
             <div>
                 { children }
@@ -128,7 +116,7 @@ export const Router = ({ routesArr, children }) => {
         return (
             <div>
                 { children }
-                { ActiveComp }
+                { state.ActiveComp }
             </div>
         );
     }

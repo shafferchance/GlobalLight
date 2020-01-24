@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GlobalContextProvider, custContext } from './mgmt.component.jsx';
+import { GlobalContextProvider, CustContextProvider } from './mgmt.component.jsx';
 
 /**
  * This will attempt to generate switch-case like behavior automatically based on the initial state passed to the program. Think of 
@@ -65,7 +65,7 @@ export const RouterStore = ({ stateI, children }) => {
             case 'setRoutes':
                 return {
                     ...state,
-                    routes: action.newRoutes
+                    internalRoutes: action.newRoutes
                 };
             case 'setActiveComp':
                 return {
@@ -83,9 +83,9 @@ export const RouterStore = ({ stateI, children }) => {
     }
 
     return (
-        <custContext name={"Router"} initialState={ initialState } reducer={ reducer }>
+        <CustContextProvider name={"Router"} initialState={ initialState } reducer={ reducer }>
             { children }
-        </custContext>
+        </CustContextProvider>
     );
 }
 
@@ -122,7 +122,8 @@ export const Store = ({ name = "base", stateI, children }) => {
         switch (action.type) {
             case "setValue":
                 if (state.hasOwnProperty(key)) {
-                    if (state[key].hasOwnProperty("graveyard")) { throw SyntaxError("Value has been deleted please use recoverValue"); }
+                    if (state[key] !== undefined && 
+                            state[key].hasOwnProperty("graveyard")) { throw SyntaxError("Value has been deleted please use recoverValue"); }
                 }
                 return {
                     ...state,
@@ -147,8 +148,8 @@ export const Store = ({ name = "base", stateI, children }) => {
     }
 
     return (
-        <custContext name={ name } reducer={ reducer } initialState={ initState }>
+        <CustContextProvider name={ name } reducer={ reducer } initialState={ initState }>
             { children}
-        </custContext>  
+        </CustContextProvider>  
     );
 }

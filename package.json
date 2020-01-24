@@ -2,7 +2,7 @@
   "name": "react-global-light",
   "version": "0.1.0",
   "description": "Lightweight, Highly-Customizable global state container made with React Hook and the context system",
-  "main": "src/index.js",
+  "main": "dist/react-global-light.js",
   "scripts": {
     "watch": "webpack --progress -d --config webpack.config.js --watch",
     "build": "webpack --mode production"
@@ -25,6 +25,10 @@
     "url": "https://github.com/shafferchance/GlobalLight/issues"
   },
   "homepage": "https://github.com/shafferchance/GlobalLight#readme",
+  "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
@@ -37,5 +41,6 @@
     "react-dom": "^16.12.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
-  }
+  },
+  "dependencies": {}
 }

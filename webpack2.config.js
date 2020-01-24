@@ -1,12 +1,8 @@
-const path = require('path');
-
 module.exports = {
-    entry: __dirname + "/src/index.js",
+    entry: __dirname + "/tests/test_app.js",
     output: {
-        path: __dirname + "/dist",
-        filename: "react-global-light.js",
-        library: "reactGlobalLight",
-        libraryTarget: "umd"
+        path: __dirname + "/tests/dist",
+        filename: "bundle.js"
     },
     module: {
         rules: [
@@ -26,10 +22,6 @@ module.exports = {
                 ]
             },
         ]
-    },
-    externals: {
-        react: 'react',
-        'react-dom': 'react-dom'
     },
     mode: "development"
 }

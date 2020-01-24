@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Router, RouterStore, Link, useStateValue} from '../src/index.js'
-
-const Test = ({children}) => {
+import { Router, RouterStore, Link, useCustomContext, ValTest} from '../dist/react-global-light.js'
+//import { OldTest } from '../dist/react-global-light.js';
+/*
+const Test = () => {
     return (
         <h1>Hello I have successfully rendered!</h1>
     )
 }
 
 const NavBar = () => {
-    const [{ routes },] = useStateValue("router");
+    //console.log(this);
+    const [{ routes },] = useCustomContext("Router");
 
     return (
         <div>
@@ -34,31 +36,36 @@ const routes = [
     {id: 0, path: '/', name: 'Home', component: <Test />}
 ]
 
-const initialState = {
-    currPath: window.location.pathname,
-    ActiveComp: routes[component]["component"],
-    routes: [],
-    id: ''
-};
-
 const component = routes.findIndex(x => {
     const curr = window.location.pathname;
     if (curr === x["path"]) {
-        console.log(x);
         return x;
     }
     return '';
 });
 
-const App = () => {
-    <RouterStore stateI={ initialState }>
-        <Router routesArr={ routes }>
-            <NavBar></NavBar>
-        </Router>
-    </RouterStore>
+const App = ({ initialState }) => {
+    return (
+        <RouterStore stateI={ initialState }>
+            <Router routesArr={ routes }>
+                <NavBar></NavBar>
+            </Router>
+        </RouterStore>
+    );
 }
 
 window.addEventListener("load", () => {
     const root = document.getElementById("root");
-    ReactDOM.render(<App />, root);
+    ReactDOM.render(<App initialState = { {
+        currPath: window.location.pathname,
+        routes: routes,
+        ActiveComp: routes[component]["component"],
+        id: ''
+    } }/>, root);
+});*/
+
+
+window.addEventListener("load", () => {
+    const root = document.getElementById("root");
+    ReactDOM.render(<ValTest initialState={{value: 0, rand: 0}} />, root);
 });

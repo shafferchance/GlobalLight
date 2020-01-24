@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GlobalContextProvider, custContext } from './mgmt.component';
+import { GlobalContextProvider, custContext } from './mgmt.component.jsx';
 
 /**
  * This will attempt to generate switch-case like behavior automatically based on the initial state passed to the program. Think of 

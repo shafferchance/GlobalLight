@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStateValue } from './mgmt.component';
+import { useStateValue } from './mgmt.component.jsx';
 
 /**
  * This link componenet is set-up to integrate compatibility with the 

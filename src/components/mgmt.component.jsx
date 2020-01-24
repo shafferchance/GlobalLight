@@ -13,10 +13,11 @@ const contextStore = {};
  */
 export const GlobalContextProvider = ({ reducer, initialState, children }) => {
     contextStore[GlobalContext] = createContext();
+    const global = contextStore[GlobalContext];
     return (
-        <contextStore.GlobalContext.Provider value={useReducer(reducer, initialState)}>
+        <global.Provider value={useReducer(reducer, initialState)}>
             {children}
-        </contextStore.GlobalContext.Provider>
+        </global.Provider>
     );
 }
 
@@ -33,10 +34,11 @@ export const GlobalContextProvider = ({ reducer, initialState, children }) => {
  */
 export const custContext = ({name, reducer, initialState, children}) => {
     contextStore[name] = createContext();
+    const context = contextStore[name];
     return (
-        <contextStore.name.Provider value={(useReducer(reducer, initialState))}>
+        <context.Provider value={(useReducer(reducer, initialState))}>
             {children}
-        </contextStore.name.Provider>
+        </context.Provider>
     );
 }
 

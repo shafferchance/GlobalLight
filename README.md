@@ -9,9 +9,9 @@ The goal here is provide someone with a lightweight solution that will work out 
 
 #### Current Tasks
 - [x] Bring over current code base
-- [ ] Make so single tag controls everything rather than dedicated file
-- [ ] Document code thoroughly
-- [ ] Integrate into a routing library at some point
+- [ ] ~~Make so single tag controls everything rather than dedicated file~~ Simplify props
+- [x] Document code thoroughly (ish for now)
+- [x] ~~Integrate into a routing library at some point~~ Routing is in ish...
 - [ ] Integrate IndexedDB for serialization
 
 ###### Food for thought

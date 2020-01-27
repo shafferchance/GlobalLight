@@ -101,6 +101,12 @@ will eventually be Route objects to go into the Routing component. Although, the
 always be up to the user and accessible through the `useCustomContext()` hook within a 
 child element of the `Routing` component. 
 
+To create links for routing system use the `Link` component. This triggers
+the context system's reducer function. The props are as follows:
+- url: Url linked to new element within SPA
+- name: Text to display as name of link 
+- linkClass: CSS class for button
+
 For the routing component that is pre-built into this package please use as follows:
 ```javascript
     import { Routing } from 'react-global-light';
@@ -117,6 +123,7 @@ For the routing component that is pre-built into this package please use as foll
     const App = ({ initialState }) => {
         return (
             <Routing initialState={ initialState } routes={ routes }>
+                ...<Link url={ [String ]} name={ [String] } linkClass={[String] }/>
                 // Children
             </Routing>
         );

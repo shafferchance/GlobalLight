@@ -4,6 +4,7 @@ const contextStore = {};
 
 // Old system below to test a theory
 export const PresetContext = createContext();
+export const CustContext = createContext();
 
 export const PresetContextProvider = ({ reducer, initState, children }) => {
     return (
@@ -25,13 +26,10 @@ export const useStateValue = () => useContext(PresetContext);
  * @param {Object} props.children - Default value passed with props from react 
  */
 export const GlobalContextProvider = ({ reducer, initialState, children }) => {
-    contextStore[GlobalContext] = createContext();
-    const Global = contextStore[GlobalContext];
-    
     return (
-        <Global.Provider value={useReducer(reducer, initialState)}>
+        <CustContext.Provider value={useReducer(reducer, initialState)}>
             {children}
-        </Global.Provider>
+        </CustContext.Provider>
     );
 }
 
@@ -47,13 +45,10 @@ export const GlobalContextProvider = ({ reducer, initialState, children }) => {
  * @param {Object} props.children - Will be passed by default when children present inside of JSX elements
  */
 export const CustContextProvider = ({name, reducer, initialState, children}) => {
-    contextStore[name] = createContext();
-    const Context = contextStore[name];
-    
     return (
-        <Context.Provider value={useReducer(reducer, initialState)}>
+        <CustContext.Provider value={useReducer(reducer, initialState)}>
             {children}
-        </Context.Provider>
+        </CustContext.Provider>
     );
 }
 
@@ -62,8 +57,9 @@ export const CustContextProvider = ({name, reducer, initialState, children}) => 
  *  
  * @param {String} contextName - Name to get context being stored within context store
  */
-export const useCustomContext = (contextName = "GlobalContext") => useContext(contextStore[contextName]);
+export const useCustomContext = (contextName = "GlobalContext") => useContext(CustContext);
 
+/*
 export const removeContext = (contextName = "GlobalContext") => {
     delete contextStore[contextName];
-}  
+}*/

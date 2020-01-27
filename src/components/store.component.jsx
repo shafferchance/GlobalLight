@@ -60,12 +60,12 @@ export const RouterStore = ({ stateI, children }) => {
             case 'changeRoute':
                 return {
                     ...state,
-                    routes: action.newPath
+                    currPath: action.newPath
                 };
             case 'setRoutes':
                 return {
                     ...state,
-                    internalRoutes: action.newRoutes
+                    routes: action.newRoutes
                 };
             case 'setActiveComp':
                 return {

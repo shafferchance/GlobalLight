@@ -10,12 +10,12 @@ import { useCustomContext } from './mgmt.component.jsx';
  * @param {String} props.linkClass - CSS class to style link with
  */
 export const Link = ({ url, name, linkClass}) => {
-    const [state, dispatch] = useCustomContext("Router"); // Custom Hook for global context
+    const [{ currPath }, setCurrPath] = useCustomContext(); // Custom Hook for global context
     const handleClick = ev => {
         ev.preventDefault();
         // console.log(currPath) // To debug current path
         window.history.pushState({}, undefined, url); // Purely stores current page with History Browswer API
-        dispatch({
+        setCurrPath({
             type: 'changeRoute',
             newPath: url
         });
@@ -49,14 +49,18 @@ export const Link = ({ url, name, linkClass}) => {
  * @param {Object} children - React default property that has children elements within JSX
  */
 export const Router = ({ routesArr, children }) => {
-    const [state, dispatch] = useCustomContext("Router");
+    const [{ ActiveComp }, setComp] = useCustomContext();
+    const [{ currPath }, setPath] = useCustomContext();
+    const [{ id }, setId] = useCustomContext();
+    const [{ routes }, setRoutes] = useCustomContext();
 
     useEffect(() => {
-        if (state.currPath !== undefined) {
+        storeRoutes();
+        if (currPath !== undefined) {
             const url = window.location.pathname.split('/').slice(1);
-            for (let i of state.routes) {
-                if (state.currPath === i.path) {
-                    dispatch({
+            for (let i of routes) {
+                if (currPath === i.path) {
+                    setComp({
                         type: 'setActiveComp',
                         newComp: i.component
                     });
@@ -68,11 +72,11 @@ export const Router = ({ routesArr, children }) => {
                const idx = splitPath.indexOf(match !== null ? match[0] : -1);
                if (match !== undefined && idx !== -1 &&
                     url[idx - 1].indexOf(splitPath[idx - 1]) !== -1) {
-                    dispatch({
+                    setId({
                         type: 'setId',
                         newId: url[idx],
                     });
-                    dispatch({
+                    setComp({
                         type: 'setActiveComp',
                         newComp: i.component
                     });
@@ -83,17 +87,17 @@ export const Router = ({ routesArr, children }) => {
             storePath(window.location.pathname);
         }
         window.onpopstate = storeLast;
-    }, [state.currPath]);
+    }, [currPath]);
 
     const storePath = url => {
-        dispatch({
+        setPath({
             type: 'changeRoute',
             newPath: url
         });
     }
 
     const storeRoutes = () => {
-        dispatch({
+        setRoutes({
             type: 'setRoutes',
             newRoutes: routesArr
         });
@@ -104,8 +108,7 @@ export const Router = ({ routesArr, children }) => {
         storePath(window.location.pathname);
     }
 
-    storeRoutes();
-    if (state.ActiveComp === undefined) {
+    if (ActiveComp === undefined) {
         return (
             <div>
                 { children }
@@ -116,7 +119,7 @@ export const Router = ({ routesArr, children }) => {
         return (
             <div>
                 { children }
-                { state.ActiveComp }
+                { ActiveComp }
             </div>
         );
     }

@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Router, RouterStore, Link, useCustomContext, ValTest} from '../dist/react-global-light.js'
+import { Router, RouterStore, Link, useCustomContext, CustContextProvider, ValTest} from '../dist/react-global-light.js'
 //import { OldTest } from '../dist/react-global-light.js';
 
 const Test = () => {
     return (
-        <h1>Hello I have successfully rendered!</h1>
-    )
+        <CustContextProvider>
+            <h1>Nested component here</h1>
+        </CustContextProvider>
+    );
 }
 
 const Another = () => {

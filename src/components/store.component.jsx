@@ -83,7 +83,7 @@ export const RouterStore = ({ stateI, children }) => {
     }
 
     return (
-        <CustContextProvider name={"Router"} initialState={ initialState } reducer={ reducer }>
+        <CustContextProvider initialState={ initialState } reducer={ reducer }>
             { children }
         </CustContextProvider>
     );
@@ -112,7 +112,7 @@ export const RouterStore = ({ stateI, children }) => {
  * @param {String} name - Name of the context container
  * @param {Object} stateI - Object containing the initial values of this generic state object 
  */
-export const Store = ({ name = "base", stateI, children }) => {
+export const Store = ({ stateI, children }) => {
     const initState = {
         ...stateI
     }
@@ -148,7 +148,7 @@ export const Store = ({ name = "base", stateI, children }) => {
     }
 
     return (
-        <CustContextProvider name={ name } reducer={ reducer } initialState={ initState }>
+        <CustContextProvider reducer={ reducer } initialState={ initState }>
             { children}
         </CustContextProvider>  
     );

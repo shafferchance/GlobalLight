@@ -6,6 +6,7 @@
   "files": ["dist"],
   "scripts": {
     "watch": "webpack --progress -d --config webpack.config.js --watch",
+    "build_tests": "webpack --progress -d --config webpack2.config.js --watch",
     "build": "webpack --mode production"
   },
   "repository": {

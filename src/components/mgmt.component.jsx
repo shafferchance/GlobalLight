@@ -44,7 +44,7 @@ export const GlobalContextProvider = ({ reducer, initialState, children }) => {
  * @param {Object} props.initialState - Will hold the initial state of the context
  * @param {Object} props.children - Will be passed by default when children present inside of JSX elements
  */
-export const CustContextProvider = ({name, reducer, initialState, children}) => {
+export const CustContextProvider = ({ reducer, initialState, children}) => {
     return (
         <CustContext.Provider value={useReducer(reducer, initialState)}>
             {children}

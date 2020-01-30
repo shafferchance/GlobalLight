@@ -29,7 +29,7 @@ export const GlobalStore = ({ stateI, children }) => {
         }
     } else {
         for (const ele in stateI) {
-            valMap[`set${stateI[ele]}`] = (state, action) => {
+            valMap[`set${ele}`] = (state, action) => {
                 return {
                     ...state,
                     ele: action[`new${stateI[ele]}`]

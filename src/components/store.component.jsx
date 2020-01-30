@@ -14,20 +14,28 @@ import { GlobalContextProvider, CustContextProvider } from './mgmt.component.jsx
 export const GlobalStore = ({ stateI, children }) => {
     let valMap = {};
     let initialState = {};
-    for (const ele of stateI) {
-        valMap[`set${ele}`] = (state, action) => {
-            return {
-                ...state,
-                ele: action[`new${ele}`]
-            }
-        }
-    }
 
     if (typeof stateI[Symbol.iterator] === "function") {
+        for (const ele of stateI) {
+            valMap[`set${ele}`] = (state, action) => {
+                return {
+                    ...state,
+                    ele: action[`new${ele}`]
+                }
+            }
+        }
         initialState = {
             ...stateI
         }
     } else {
+        for (const ele in stateI) {
+            valMap[`set${stateI[ele]}`] = (state, action) => {
+                return {
+                    ...state,
+                    ele: action[`new${stateI[ele]}`]
+                }
+            }
+        }
         for (const ele in stateI) {
             initialState[ele] = stateI[ele];
         }

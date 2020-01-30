@@ -28,7 +28,7 @@ export const GlobalStore = ({ stateI, children }) => {
             ...stateI
         }
     } else {
-        for (const ele of stateI) {
+        for (const ele in stateI) {
             initialState[ele] = stateI[ele];
         }
     }

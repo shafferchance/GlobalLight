@@ -32,7 +32,7 @@ export const GlobalStore = ({ stateI, children }) => {
             valMap[`set${ele}`] = (state, action) => {
                 return {
                     ...state,
-                    ele: action[`new${ele}`]
+                    [ele]: action[ele]
                 }
             }
         }
@@ -49,7 +49,7 @@ export const GlobalStore = ({ stateI, children }) => {
             return state;
         }
     }
-
+    
     return (
         <GlobalContextProvider initialState={ initialState } reducer={ reducer }>
             { children }

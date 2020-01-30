@@ -2,6 +2,7 @@ import React, { Children } from 'react';
 import ReactDOM from 'react-dom';
 
 import { RouterStore, Router, Routing, Link, useCustomContext, CustContextProvider, ValTest} from '../dist/react-global-light.js'
+import { GlobalStore } from '../src/index.js';
 //import { OldTest } from '../dist/react-global-light.js';
 
 const Test = () => {
@@ -46,9 +47,11 @@ const routes = [
 
 const App = ({ initialState }) => {
     return (
-        <Routing initialState={ initialState } routes={ routes }>
-            <NavBar></NavBar>
-        </Routing>
+        <GlobalStore stateI={{hello: "world"}}>
+            <Routing initialState={ initialState } routes={ routes }>
+                <NavBar></NavBar>
+            </Routing>
+        </GlobalStore>
     );
 }
 

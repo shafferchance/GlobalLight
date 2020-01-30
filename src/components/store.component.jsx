@@ -43,8 +43,8 @@ export const GlobalStore = ({ stateI, children }) => {
 
     // Instead of switch-case as below, will check if it exist 
     const reducer = (state, action) => {
-        if (valMap.hasOwnProperty(`set${action.type}`)) {
-            return valMap[`set${action.type}`](state, action);
+        if (valMap.hasOwnProperty(action.type)) {
+            return valMap[action.type](state, action);
         } else {
             return state;
         }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { GlobalContextProvider, CustContextProvider } from './mgmt.component.jsx';
+import { GlobalContextProvider, RoutingContextProvider ,CustContextProvider } from './mgmt.component.jsx';
 
 /**
  * This will attempt to generate switch-case like behavior automatically based on the initial state passed to the program. Think of 
@@ -98,9 +98,9 @@ export const RouterStore = ({ stateI, children }) => {
     }
 
     return (
-        <CustContextProvider initialState={ initialState } reducer={ reducer }>
+        <RoutingContextProvider initialState={ initialState } reducer={ reducer }>
             { children }
-        </CustContextProvider>
+        </RoutingContextProvider>
     );
 }
 

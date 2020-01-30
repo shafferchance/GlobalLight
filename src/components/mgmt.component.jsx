@@ -18,6 +18,14 @@ export const PresetContextProvider = ({ reducer, initState, children }) => {
 
 export const useStateValue = () => useContext(PresetContext);
 
+export const RoutingContextProvider = ({ reducer, initialState, children }) => {
+    return (
+        <RouterContext.Provider value={useReducer(reducer, initialState)}>
+            { children }
+        </RouterContext.Provider>
+    );
+}
+
 /**
  * Global State container that has been updated, but kept in-order for 
  * backwards compatibility. Really the custContext component will 

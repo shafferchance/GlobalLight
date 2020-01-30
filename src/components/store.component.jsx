@@ -32,7 +32,7 @@ export const GlobalStore = ({ stateI, children }) => {
             valMap[`set${ele}`] = (state, action) => {
                 return {
                     ...state,
-                    ele: action[`new${stateI[ele]}`]
+                    ele: action[`new${ele}`]
                 }
             }
         }

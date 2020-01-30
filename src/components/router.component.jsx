@@ -10,7 +10,7 @@ import { useCustomContext } from './mgmt.component.jsx';
  * @param {String} props.linkClass - CSS class to style link with
  */
 export const Link = ({ url, name, linkClass}) => {
-    const [{ currPath }, setCurrPath] = useCustomContext(); // Custom Hook for global context
+    const [{ currPath }, setCurrPath] = useCustomContext("routing"); // Custom Hook for global context
     const handleClick = ev => {
         ev.preventDefault();
         // console.log(currPath) // To debug current path
@@ -49,10 +49,10 @@ export const Link = ({ url, name, linkClass}) => {
  * @param {Object} children - React default property that has children elements within JSX
  */
 export const Router = ({ routesArr, children }) => {
-    const [{ ActiveComp }, setComp] = useCustomContext();
-    const [{ currPath }, setPath] = useCustomContext();
-    const [{ id }, setId] = useCustomContext();
-    const [{ routes }, setRoutes] = useCustomContext();
+    const [{ ActiveComp }, setComp] = useCustomContext("routing");
+    const [{ currPath }, setPath] = useCustomContext("routing");
+    const [{ id }, setId] = useCustomContext("routing");
+    const [{ routes }, setRoutes] = useCustomContext("routing");
 
     useEffect(() => {
         storeRoutes();

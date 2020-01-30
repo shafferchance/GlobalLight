@@ -2,8 +2,10 @@ import React, {createContext, useContext, useReducer} from 'react';
 
 const contextStore = {};
 
-// Old system below to test a theory
+// Will have to experiment with creating a collection of contexts
 export const PresetContext = createContext();
+export const RouterContext = createContext();
+export const GlobalContext = createContext();
 export const CustContext = createContext();
 
 export const PresetContextProvider = ({ reducer, initState, children }) => {
@@ -27,9 +29,9 @@ export const useStateValue = () => useContext(PresetContext);
  */
 export const GlobalContextProvider = ({ reducer, initialState, children }) => {
     return (
-        <CustContext.Provider value={useReducer(reducer, initialState)}>
+        <GlobalContext.Provider value={useReducer(reducer, initialState)}>
             {children}
-        </CustContext.Provider>
+        </GlobalContext.Provider>
     );
 }
 
@@ -57,7 +59,22 @@ export const CustContextProvider = ({ reducer, initialState, children}) => {
  *  
  * @param {String} contextName - Name to get context being stored within context store
  */
-export const useCustomContext = (contextName = "GlobalContext") => useContext(CustContext);
+export const useCustomContext = contextName =>  {
+    switch(contextName) {
+        case "routing":
+        case "router":
+        case "Router":
+            return useContext(RouterContext);
+        case "global":
+        case "Global":
+            return useContext(GlobalContext);
+        case "preset":
+        case "Preset":
+            return useContext(PresetContext);
+        default:
+            return useContext(CustContext);
+    }   
+}
 
 /*
 export const removeContext = (contextName = "GlobalContext") => {

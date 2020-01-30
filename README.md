@@ -6,6 +6,21 @@ The goal here is provide someone with a lightweight solution that will work out 
 - Have minimal/negible performance cost
 - Ensure that integration is easy
 - Function with or without customization
+- Be Backwards Compatible, unless absolutely necessary to not be
+
+### Rationale 
+Are you tired of having to update your code frequently becasue React 
+Router released a new version? Tired of getting way more functionality than required with Redux? Just curious, or something else? Welcome, the idea
+behind this very small collection of hooks and components is to give
+developers more choice for routing and state management past the well 
+known solutions of Redux and React Router, while allowing developers to
+control the bloat within their application as well as not have to worry
+about updating their code quite as frequently, so that developers may work
+on what they want and not spend all day maintaining an old application.
+Thus this library will remain backwards compatibile for most versions
+and be split into modules to maintain small size if necessary. While 
+they are many other solutions avaliable they tend to be good at one
+thing and try and conquoer one problem rather than solve multiple. 
 
 #### Current Tasks
 - [x] Bring over current code base
@@ -13,10 +28,12 @@ The goal here is provide someone with a lightweight solution that will work out 
 - [x] Document code thoroughly (ish for now)
 - [x] ~~Integrate into a routing library at some point~~ Routing is in ish...
 - [ ] Integrate IndexedDB for serialization
+- [ ] Investigate creating a collection of Contexts for mutation and access from one key
 
 #### Future Tasks
 - [ ] Create a way to pass to higher context on page, if possible
 - [ ] Integrate component testing for a more proper check and examples
+- [ ] Possbily move all routing into hooks (Have to see if this viable)
 
 #### Global store
 The reducer function built-in has a LIFO set with CRUD built-in that functions 
@@ -85,13 +102,21 @@ If you wish to create a context container for any component within the file impo
     }
 ```
 
-This an example of how exactly to utilize the Context Container created
+This an example of how exactly to utilize the Context Container created.
+Depending on the context desired use the following:
+- global, Global inside of `useCustomContext([context])`
+- routing, router, Router inside of `useCustomContext([context])`
+- preset, Preset inside of `useCustomContext([context])`
+- () will default to the Custom Context provider that access the next parent `CustContextContainer`
+
+**Note: Eventually the above will not be necessary**
+
 ```javascript
     import { useCustContext } from 'react-light-global';
 
     const App = () => {
         // Use this form and follow rules of hooks
-        const [{ [Property] }, use[Property]] = useCustContext();
+        const [{ [Property] }, use[Property]] = useCustomContext();
 
         // Render function
     }

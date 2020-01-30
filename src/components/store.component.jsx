@@ -13,6 +13,7 @@ import { GlobalContextProvider, CustContextProvider } from './mgmt.component.jsx
  */
 export const GlobalStore = ({ stateI, children }) => {
     let valMap = {};
+    let initialState = {};
     for (const ele of stateI) {
         valMap[`set${ele}`] = (state, action) => {
             return {
@@ -22,8 +23,14 @@ export const GlobalStore = ({ stateI, children }) => {
         }
     }
 
-    const initialState = {
-        ...stateI
+    if (typeof stateI[Symbol.iterator] === "function") {
+        initialState = {
+            ...stateI
+        }
+    } else {
+        for (const ele of stateI) {
+            initialState[ele] = stateI[ele];
+        }
     }
 
     // Instead of switch-case as below, will check if it exist 

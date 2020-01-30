@@ -14,6 +14,10 @@ The goal here is provide someone with a lightweight solution that will work out 
 - [x] ~~Integrate into a routing library at some point~~ Routing is in ish...
 - [ ] Integrate IndexedDB for serialization
 
+#### Future Tasks
+- [ ] Create a way to pass to higher context on page, if possible
+- [ ] Integrate component testing for a more proper check and examples
+
 #### Global store
 The reducer function built-in has a LIFO set with CRUD built-in that functions 
 off of the value key in the action object sent inside of the reducer function:

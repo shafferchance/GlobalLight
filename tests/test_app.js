@@ -19,7 +19,7 @@ const Another = () => {
 }
 
 const NavBar = () => {
-    const [{ routes },] = useCustomContext();
+    const [{ routes },] = useCustomContext("routing");
 
     return (
         <div>

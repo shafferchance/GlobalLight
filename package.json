@@ -1,9 +1,11 @@
 {
   "name": "react-global-light",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Lightweight, Highly-Customizable global state container made with React Hook and the context system",
   "main": "dist/react-global-light.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "watch": "webpack --progress -d --config webpack.config.js --watch",
     "build_tests": "webpack --progress -d --config webpack2.config.js --watch",

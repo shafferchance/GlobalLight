@@ -2,11 +2,14 @@ const path = require('path');
 
 module.exports = {
     entry: __dirname + "/src/index.js",
+    devtool: "source-map",
     output: {
         path: __dirname + "/dist",
         filename: "react-global-light.js",
         library: "reactGlobalLight",
-        libraryTarget: "umd"
+        libraryTarget: "umd",
+        umdNamedDefine: true,
+        globalObject: "typeof self !== 'undefined' ? self : this"
     },
     module: {
         rules: [

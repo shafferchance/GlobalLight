@@ -1,4 +1,3 @@
-import React from 'react'
 import { Store,  GlobalStore, RouterStore } from './components/store.component.jsx';
 import { CustContextProvider, RoutingContextProvider, useCustomContext } from './components/mgmt.component.jsx';
 import { Link, Router } from './components/router.component.jsx';

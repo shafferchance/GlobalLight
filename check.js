@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import ReactDOM from 'react-dom';
 
 const ctxt = {};
 
@@ -31,11 +30,11 @@ const Store = ({ name, initState, children }) => {
   );
 }
 
-const App = () => {
-  return (
-    <Store name={ "global" } initialState={ {"hello": "another"} }>
-      <h1>Checking if crashes...</h1>
-    </Store>
-  );
-}
-window.addEventListener("load", () => ReactDOM.render(<App />, document.getElementById("app")));
+// const App = () => {
+//   return (
+//     <Store name={ "global" } initialState={ {"hello": "another"} }>
+//       <h1>Checking if crashes...</h1>
+//     </Store>
+//   );
+// }
+// window.addEventListener("load", () => ReactDOM.render(<App />, document.getElementById("app")));

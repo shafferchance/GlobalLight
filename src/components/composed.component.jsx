@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { RouterStore } from './store.component.jsx';
 import { Router } from './router.component.jsx';
 

@@ -1,6 +1,6 @@
 {
   "name": "react-global-light",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Lightweight, Highly-Customizable global state container made with React Hook and the context system",
   "main": "dist/index.js",
   "scripts": {

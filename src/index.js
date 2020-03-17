@@ -5,14 +5,7 @@ import { Routing } from './components/composed.component.jsx';
 import { ValTest, OldTest } from './components/test.component.jsx';
 
 export {
-    Store,
-    GlobalStore,
-    RouterStore,
-    CustContextProvider,
-    useCustomContext,
-    Link,
-    Router,
-    Routing,
-    ValTest,
-    OldTest
+    Store,  GlobalStore, RouterStore,
+    CustContextProvider, RoutingContextProvider, useCustomContext,
+    Link, Router, Routing, ValTest, OldTest 
 };

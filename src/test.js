@@ -1,7 +1,19 @@
-import ExampleComponent from './'
+import { RouterStore, GlobalStore, Link } from './index';
 
-describe('ExampleComponent', () => {
+describe('Router Store', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(RouterStore).toBeTruthy();
   })
-})
+});
+
+describe('Global Store', () => {
+  it('is truthy', () => {
+    expect(GlobalStore).toBeTruthy();
+  })
+});
+
+describe('Link', () => {
+  it('is truthy', () => {
+    expect(Link).toBeTruthy();
+  })
+});

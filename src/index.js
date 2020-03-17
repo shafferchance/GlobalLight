@@ -1,22 +1,12 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import { Store,  GlobalStore, RouterStore } from './components/store.component.jsx';
+import { CustContextProvider, RoutingContextProvider, useCustomContext } from './components/mgmt.component.jsx';
+import { Link, Router } from './components/router.component.jsx';
+import { Routing } from './components/composed.component.jsx';
+import { ValTest, OldTest } from './components/test.component.jsx';
 
-import styles from './styles.css'
-
-export default class ExampleComponent extends Component {
-  static propTypes = {
-    text: PropTypes.string
-  }
-
-  render() {
-    const {
-      text
-    } = this.props
-
-    return (
-      <div className={styles.test}>
-        Example Component: {text}
-      </div>
-    )
-  }
+export {
+    Store,  GlobalStore, RouterStore,
+    CustContextProvider, RoutingContextProvider, useCustomContext,
+    Link, Router, Routing, ValTest, OldTest 
 }

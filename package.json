@@ -2,11 +2,14 @@
   "name": "react-global-light",
   "version": "0.3.1",
   "description": "Lightweight, Highly-Customizable global state container made with React Hook and the context system",
-  "main": "dist/react-global-light.js",
+  "main": "build/cjs/index.js",
+  "module": "build/esm/index.js",
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
-    "build": "webpack --mode production",
-    "start": "webpack --mode development --watch"
+    "build": "rollup -c",
+    "buildWebpack": "webpack --mode production",
+    "start": "rollup -c -w",
+    "startWebpack": "webpack --mode development --watch"
   },
   "keywords": [
     "router",
@@ -23,20 +26,24 @@
   },
   "homepage": "https://github.com/shafferchance/GlobalLight#readme",
   "peerDependencies": {
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react": "^16.13.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/preset-react": "^7.8.3",
-    "acorn": ">=6.4.1",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.4.2",
+    "@babel/core": "^7.10.0",
+    "@babel/preset-env": "^7.10.0",
+    "@babel/preset-react": "^7.10.0",
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "@rollup/plugin-replace": "^2.3.2",
+    "acorn": "^7.2.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
     "html-loader": "^0.5.5",
     "minimist": ">=1.2.2",
     "prop-types": "^15.7.2",
-    "webpack": "^4.42.0",
+    "react": "^16.13.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {}

@@ -109,7 +109,7 @@ export const RouterStore = ({ stateI, children }) => {
             console.log(action); // Debug the action being called upon state container
             console.groupEnd();
         }
-        
+
         switch (action.type) {
             case 'changeRoute':
                 return {
@@ -131,6 +131,11 @@ export const RouterStore = ({ stateI, children }) => {
                     ...state,
                     id: action.newId
                 };
+            case `set${action.key}`:
+                return {
+                    ...state,
+                    [action.key]: action.value
+                }
             default:
                 return state;
         }

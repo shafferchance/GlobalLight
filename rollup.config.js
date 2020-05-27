@@ -4,10 +4,10 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
 const NODE_ENV = process.env.NODE_ENV || "development";
-const externals = {react: 'React', 'react-dom': 'ReactDOM'};
+const externals = {react: 'React'};
 
 export default {
-    input: "index.js",
+    input: "src/index.js",
     external: Object.keys(externals),
     output: [
         {
@@ -15,8 +15,7 @@ export default {
             format: 'umd',
             name: 'GlobalLight',
             globals: {
-                'react': 'React',
-                'react-dom': 'ReactDOM'
+                'react': 'React'
             }
         },
         {
@@ -24,8 +23,7 @@ export default {
             format: 'cjs',
             name: "GlobalLight",
             globals: {
-                'react': 'React',
-                'react-dom': 'ReactDOM'
+                'react': 'React'
             }
         },
         {
@@ -33,8 +31,7 @@ export default {
             format: "es",
             name: "GlobalLight",
             globals: {
-                'react': 'React',
-                'react-dom': 'ReactDOM'
+                'react': 'React'
             }
         }
     ],

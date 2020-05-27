@@ -21,9 +21,9 @@ export const Routing = ({ initialState, Header, Footer, routes, className, child
 
     return (
         <RouterStore initialState={ initState }>
-            <Router Header={Header} Footer={Footer} routesArr={routes} className={className}>
+            <Router routesArr={routes} className={className}>
                 { children }
             </Router>
         </RouterStore>
-    );
+    )
 } 

@@ -63,7 +63,7 @@ export const Link = ({ url, name, className, Button}) => {
  * @param {Array} RoutesArr - Stores the routes that the application can access
  * @param {Object} children - React default property that has children elements within JSX
  */
-export const Router = ({ routesArr, className, children }) => {
+export const Router = ({ Header, Footer, routesArr, className, children }) => {
     const [{ ActiveComp }, setComp] = useCustomContext("routing");
     const [{ currPath }, setPath] = useCustomContext("routing");
     const [, setId] = useCustomContext("routing");
@@ -119,22 +119,22 @@ export const Router = ({ routesArr, className, children }) => {
     if (ActiveComp === undefined) {
         return (
             <div className={className}>
-                { Header }
+                { Header || null}
                 <div className={"container"}>
                     { children }
                     <p>Link not Found!</p>
                 </div>
-                { Footer }
+                { Footer || null1}
             </div>
         );
     } else {
         return (
             <div className={className}>
-                { Header }
+                { Header || null}
                 <ErrorBoundary>
                     { ActiveComp }
                 </ErrorBoundary>
-                { Footer }
+                { Footer || null}
             </div>
         );
     }

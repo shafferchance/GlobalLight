@@ -77,6 +77,7 @@ export const Router = ({ Header, Footer, routesArr, className, children }) => {
         if (currPath !== undefined) {
             const url = window.location.pathname.split('/').slice(1);
             for (let i of routes) {
+                let pathIdx = i.path.indexOf(currPath);
                 if (currPath === i.path) {
                     setComp({
                         type: 'setActiveComp',
@@ -85,8 +86,8 @@ export const Router = ({ Header, Footer, routesArr, className, children }) => {
                     break;
                 }
                 pathIdx = 0;
-                const match = i.path.match(/:\w+/g);
-                const splitPath = i.path.split('/').slice(1);
+                const match = i.path[pathIdx].match(/:\w+/g);
+                const splitPath = i.path[pathIdx].split('/').slice(1);
                 const idx = splitPath.indexOf(match !== null ? match[0] : -1);
                 if (match !== undefined && idx !== -1 &&
                         url[idx - 1].indexOf(splitPath[idx - 1]) !== -1) {

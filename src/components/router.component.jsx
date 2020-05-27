@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import { useCustomContext } from './mgmt.component.jsx';
+import { ErrorBoundary } from './ErrorBoundary.component.jsx';
 
 /**
  * This link componenet is set-up to integrate compatibility with the 
  * history API with a native `a` tag.
  * 
- * @param {String} props.url - Url to navigate to
- * @param {String} props.name - Name of link
- * @param {String} props.linkClass - CSS class to style link with
+ * @param {String} props.url               - Url to navigate to
+ * @param {String} props.name              - Name of link
+ * @param {String} props.className         - CSS class to style link with
+ * @param {React.Component} [props.Button] - Button element
  */
-export const Link = ({ url, name, linkClass}) => {
-    const [{ currPath }, setCurrPath] = useCustomContext("routing"); // Custom Hook for global context
+export const Link = ({ url, name, className, Button}) => {
+    const [, setCurrPath] = useCustomContext("routing"); // Custom Hook for global context
     const handleClick = ev => {
         ev.preventDefault();
         // console.log(currPath) // To debug current path
@@ -21,12 +23,25 @@ export const Link = ({ url, name, linkClass}) => {
         });
     }
 
-    return (
-        <a href={'_blank'}
-           rel="noopener norefferer"
-           onClick={handleClick}
-           className={linkClass}>{name}</a>
-    );
+    if (Button) {
+        return (
+            <Button className={className} onClick={handleClick}>{name}</Button>
+        );
+    } else {
+        return (
+            <a className={className} onClick={handleClick}>
+                { children }
+            </a>
+        )
+    }
+
+
+    // return (
+    //     <a href={'_blank'}
+    //        rel="noopener norefferer"
+    //        onClick={handleClick}
+    //        className={linkClass}>{name}</a>
+    // );
 };
 
 /**
@@ -51,11 +66,14 @@ export const Link = ({ url, name, linkClass}) => {
 export const Router = ({ routesArr, children }) => {
     const [{ ActiveComp }, setComp] = useCustomContext("routing");
     const [{ currPath }, setPath] = useCustomContext("routing");
-    const [{ id }, setId] = useCustomContext("routing");
+    const [, setId] = useCustomContext("routing");
     const [{ routes }, setRoutes] = useCustomContext("routing");
 
     useEffect(() => {
-        storeRoutes();
+        setRoutes({
+            type: 'setRoutes',
+            newRoutes: routesArr
+        });
         if (currPath !== undefined) {
             const url = window.location.pathname.split('/').slice(1);
             for (let i of routes) {
@@ -66,60 +84,57 @@ export const Router = ({ routesArr, children }) => {
                     });
                     break;
                 }
-
-               const match = i.path.match(/:\w+/g);
-               const splitPath = i.path.split('/').slice(1);
-               const idx = splitPath.indexOf(match !== null ? match[0] : -1);
-               if (match !== undefined && idx !== -1 &&
-                    url[idx - 1].indexOf(splitPath[idx - 1]) !== -1) {
-                    setId({
-                        type: 'setId',
-                        newId: url[idx],
-                    });
-                    setComp({
-                        type: 'setActiveComp',
-                        newComp: i.component
-                    });
-                    break;
+                pathIdx = 0;
+                const match = i.path.match(/:\w+/g);
+                const splitPath = i.path.split('/').slice(1);
+                const idx = splitPath.indexOf(match !== null ? match[0] : -1);
+                if (match !== undefined && idx !== -1 &&
+                        url[idx - 1].indexOf(splitPath[idx - 1]) !== -1) {
+                        setId({
+                            type: 'setId',
+                            newId: url[idx],
+                        });
+                        setComp({
+                            type: 'setActiveComp',
+                            newComp: i.component
+                        });
+                        break;
                 }
             }
         } else {
-            storePath(window.location.pathname);
+            setPath({
+                type: 'changeRoute',
+                newPath: window.location.pathname
+            });
         }
-        window.onpopstate = storeLast;
-    }, [currPath]);
-
-    const storePath = url => {
-        setPath({
-            type: 'changeRoute',
-            newPath: url
-        });
-    }
-
-    const storeRoutes = () => {
-        setRoutes({
-            type: 'setRoutes',
-            newRoutes: routesArr
-        });
-    }
-
-    const storeLast = e => {
-        e.preventDefault();
-        storePath(window.location.pathname);
-    }
+        window.onpopstate = e => {
+            e.preventDefault();
+            setPath({
+                type: 'changeRoute',
+                newPath: window.location.pathname
+            });
+        }
+    }, [currPath, routes, setComp, setId, setPath, routesArr, setRoutes]);
 
     if (ActiveComp === undefined) {
         return (
-            <div>
-                { children }
-                <p>Link not Found!</p>
+            <div className={className}>
+                { Header }
+                <div className={"container"}>
+                    { children }
+                    <p>Link not Found!</p>
+                </div>
+                { Footer }
             </div>
         );
     } else {
         return (
-            <div>
-                { children }
-                { ActiveComp }
+            <div className={className}>
+                { Header }
+                <ErrorBoundary>
+                    { ActiveComp }
+                </ErrorBoundary>
+                { Footer }
             </div>
         );
     }

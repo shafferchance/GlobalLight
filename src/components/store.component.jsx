@@ -8,6 +8,8 @@ import { GlobalContextProvider, RoutingContextProvider ,CustContextProvider } fr
  * in the future but right now a synchronous function that O(1) is utilized leaving no need until customization is brought into the 
  * picture to do uncertain nature of other peoples code.
  * 
+ * Values cannot be mapped if they are not in the initial state
+ * 
  * @param {Object} Config.stateI This contains the initial state of the funciton and will attempt to generate switch case like behavior
  * @param {Object} Config.children Property used by react to pass child elements and props down chain 
  */
@@ -15,19 +17,31 @@ export const GlobalStore = ({ stateI, children }) => {
     let valMap = {};
     let initialState = {};
 
+    /* 
+        Symbol.iterator is a built in Symbol that is used with generators and for...of 
+        loops as these for a function on Symbol.iterator. Hence why a function is
+        the Right Hand Side (RHS) is the logical equivalence check of value and type
+    */
     if (typeof stateI[Symbol.iterator] === "function") {
+        // Generating functions for values passed in the initial state
         for (const ele of stateI) {
+            // Placing this bound anaonymous functions for each entry in the initial state, stateIZ
             valMap[`set${ele}`] = (state, action) => {
+                // Since an object is being updated all the values must be placed in then the updated value
+                // setState from class-based components does this for the user, hooks do not
                 return {
                     ...state,
-                    ele: action[`new${ele}`]
+                    ele: action[`new${ele}`] /* The symbol declaritive style for objects is used here as it "hides" the property 
+                                                on print and allows for var key explicitly */
                 }
             }
         }
+        /// Initializing state
         initialState = {
             ...stateI
         }
     } else {
+        // Generating function as above, but using the key each passed instead here as for...in will return object keys
         for (const ele in stateI) {
             valMap[`set${ele}`] = (state, action) => {
                 return {
@@ -36,13 +50,33 @@ export const GlobalStore = ({ stateI, children }) => {
                 }
             }
         }
+        // Maybe redundant now, but would have to check. Spread operator may work better. Initializes state
         for (const ele in stateI) {
             initialState[ele] = stateI[ele];
         }
     }
 
-    // Instead of switch-case as below, will check if it exist 
+    /*
+        Instead of switch-case as below, will check if the property requested exists.
+        If not the current state is returned with no warning or error. This should
+        likely be changed.
+
+        A reducer function takes some current state and an action object
+            In this implementation once the action object is recieved the following occurs:
+                1. Action.type is checked if it exist as a property of the generated
+                   functions from above
+
+                   If true, then pass the parameters to invoke the logic generated above
+                   If false, then return the current state
+    */
     const reducer = (state, action) => {
+        if (process.env.DEBUG) {
+            console.groupCollapsed("Routing: ")
+            console.log(state);
+            console.log(action);
+            console.log(valMap);
+            console.groupEnd();
+        }
         if (valMap.hasOwnProperty(action.type)) {
             return valMap[action.type](state, action);
         } else {
@@ -70,7 +104,12 @@ export const RouterStore = ({ stateI, children }) => {
     }
 
     const reducer = (state, action) => {
-        // console.log(action); // Debug the action being called upon state container
+        if (process.env.DEBUG) {
+            console.groupCollapsed("Reducer Action: ");
+            console.log(action); // Debug the action being called upon state container
+            console.groupEnd();
+        }
+        
         switch (action.type) {
             case 'changeRoute':
                 return {

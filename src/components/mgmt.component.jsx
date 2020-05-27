@@ -1,7 +1,5 @@
 import React, {createContext, useContext, useReducer} from 'react';
 
-const contextStore = {};
-
 // Will have to experiment with creating a collection of contexts
 export const PresetContext = createContext();
 export const RouterContext = createContext();
@@ -68,19 +66,24 @@ export const CustContextProvider = ({ reducer, initialState, children}) => {
  * @param {String} contextName - Name to get context being stored within context store
  */
 export const useCustomContext = contextName =>  {
+    const routing = useContext(RouterContext);
+    const ctxt = useContext(GlobalContext);
+    const preset = useContext(PresetContext);
+    const cust = useContext(CustContext);
+
     switch(contextName) {
         case "routing":
         case "router":
         case "Router":
-            return useContext(RouterContext);
+            return routing;
         case "global":
         case "Global":
-            return useContext(GlobalContext);
+            return ctxt;
         case "preset":
         case "Preset":
-            return useContext(PresetContext);
+            return preset;
         default:
-            return useContext(CustContext);
+            return cust;
     }   
 }
 

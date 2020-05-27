@@ -2,10 +2,10 @@ import React from 'react';
 import { RouterStore } from './store.component.jsx';
 import { Router } from './router.component.jsx';
 
-export const Routing = ({ initialState, routes, children }) => {
+export const Routing = ({ initialState, Header, Footer, routes, className, children }) => {
     const component = routes.findIndex(x => {
         const curr = window.location.pathname;
-        if (curr === x["path"]) {
+        if (x.path.indexOf(curr) !== -1) {
             return x;
         }
         return '';
@@ -21,7 +21,7 @@ export const Routing = ({ initialState, routes, children }) => {
 
     return (
         <RouterStore initialState={ initState }>
-            <Router routesArr={ routes }>
+            <Router Header={Header} Footer={Footer} routesArr={routes} className={className}>
                 { children }
             </Router>
         </RouterStore>

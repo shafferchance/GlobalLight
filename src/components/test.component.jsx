@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { PresetContextProvider, useStateValue, useCustomContext, CustContextProvider } from './mgmt.component.jsx';
 
+// These are test designed to show the capabilities of the Global State system
+
+/*
+    Tests values updating and calling re-render cycles properly
+*/
 const EffectTest = ({name, children}) => {
     const [state, dispatch] = useCustomContext(name);
 
@@ -18,6 +23,9 @@ const EffectTest = ({name, children}) => {
     );
 }
 
+/*
+    Tests setting inputs with the Global Store
+*/
 const ValueEle = ({ name, children }) => {
     const [inputVal, setInputVal] = useState();
     const [state, dispatch] = useCustomContext(name);
@@ -26,6 +34,7 @@ const ValueEle = ({ name, children }) => {
         console.log("How was random trigger?!");
     }, [state.rand])
 
+    // Global store setting values
     const handleClick = e => {
         e.preventDefault();
         dispatch({
@@ -34,6 +43,7 @@ const ValueEle = ({ name, children }) => {
         });
     }
 
+    // Normal way of submitting change to local state
     const handleInput = e => {
         console.log(e);
         setInputVal(e.target.value);
@@ -49,6 +59,7 @@ const ValueEle = ({ name, children }) => {
     );
 }
 
+// Reducer function example
 const reducer = (state, action) => {
     const key = Object.keys(action)[1];
     switch (action.type) {
@@ -62,7 +73,7 @@ const reducer = (state, action) => {
     }
 }
 
-
+// Base element of for testing adding objects
 export const ValTest = ({ initialState }) => {
     return (
         <CustContextProvider name="Val" reducer={ reducer } initialState={ initialState }>
@@ -72,14 +83,16 @@ export const ValTest = ({ initialState }) => {
     );
 }
 
-const OldEffect = ({ children }) => {
-    const [{ value }, setVal] = useStateValue();
+// Old system, this is much more direct of the context being used and not as flexible as the new system
+const OldEffect = () => {
+    const [{ value }, setVal] = useStateValue(); // Notice the Context is automatically handed by this custom hook
     //const [{ rand },] = useStateValue();
 
     useEffect(() => {
         console.log(`New value: ${value}`);
     }, [value]);
 
+    // Display
     return (
         <div>
             <p>New Value: {value}</p>
@@ -87,9 +100,10 @@ const OldEffect = ({ children }) => {
     );
 }
 
-const OldValue = ({ children }) => {
+// Old value, this is for setting the vlaue in global state with the old system
+const OldValue = () => {
     const [input, setInput] = useState();
-    const [{ value }, setVal] = useStateValue();
+    const [, setVal] = useStateValue();
     const [{ rand },] = useStateValue();
 
     useEffect(() => {
@@ -101,6 +115,7 @@ const OldValue = ({ children }) => {
         setInput(e.target.value);
     }
 
+    // Setting the value in the old is similar to the new except for the big difference being type verb
     const handleSubmit = e => {
         console.log(e.target);
         setVal({
@@ -118,7 +133,8 @@ const OldValue = ({ children }) => {
     );
 }
 
-export const OldTest = ({ initialState, children }) => {
+// Base componenet for the old test
+export const OldTest = ({ initialState }) => {
     return (
         <PresetContextProvider reducer={ reducer } initState={ initialState }>
             <OldEffect />

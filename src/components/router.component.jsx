@@ -63,7 +63,7 @@ export const Link = ({ url, name, className, Button}) => {
  * @param {Array} RoutesArr - Stores the routes that the application can access
  * @param {Object} children - React default property that has children elements within JSX
  */
-export const Router = ({ routesArr, children }) => {
+export const Router = ({ routesArr, className, children }) => {
     const [{ ActiveComp }, setComp] = useCustomContext("routing");
     const [{ currPath }, setPath] = useCustomContext("routing");
     const [, setId] = useCustomContext("routing");

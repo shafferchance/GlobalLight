@@ -78,7 +78,7 @@ export const Router = ({ Header, Footer, routesArr, className, children }) => {
             const url = window.location.pathname.split('/').slice(1);
             for (let i of routes) {
                 let pathIdx = i.path.indexOf(currPath);
-                if (currPath === i.path) {
+                if (pathIdx !== -1) {
                     setComp({
                         type: 'setActiveComp',
                         newComp: i.component

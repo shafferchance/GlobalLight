@@ -124,7 +124,7 @@ export const Router = ({ Header, Footer, routesArr, className, children }) => {
                     { children }
                     <p>Link not Found!</p>
                 </div>
-                { Footer || null1}
+                { Footer || null}
             </div>
         );
     } else {

@@ -11,7 +11,7 @@ import { ErrorBoundary } from './ErrorBoundary.component.jsx';
  * @param {String} props.className         - CSS class to style link with
  * @param {React.Component} [props.Button] - Button element
  */
-export const Link = ({ url, name, className, Button}) => {
+export const Link = ({ url, name, className, Button, children}) => {
     const [, setCurrPath] = useCustomContext("routing"); // Custom Hook for global context
     const handleClick = ev => {
         ev.preventDefault();
